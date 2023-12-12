@@ -7,17 +7,12 @@
     Dichiariamo chi ha vinto.
 */
 
-const scelta = prompt('Scegli pari o dispari');
-const userNumber = parseInt(prompt('Inserisci il tuo numero'));
-console.log('Hai scelto: ', scelta, typeof scelta);
-
-
+// Creo la funzione che mi genera un numero random tra min e max
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
-
+// Creo la funzione che verifica se la somma di due numeri è pari o dispari
 function oddEven(x, y){
     let sum = x + y;
     if (sum % 2 == 0){
@@ -28,22 +23,42 @@ function oddEven(x, y){
     }
 }
 
-let numeroRandom = randomNumber(1, 5);
-console.log('Numero pc', numeroRandom, typeof numeroRandom);
-console.log('Tuo numero', userNumber, typeof userNumber);
+// Creo evento che al click mi da il risultato
+const myButton = document.querySelector('button');
+myButton.addEventListener('click', function(){
+    const even = document.getElementById('even');
+    const odd = document.getElementById('odd');
+    const myP = document.querySelector('p')
+    const userNumber = parseInt(document.getElementById('user-number').value);
 
-const result = oddEven(numeroRandom, userNumber);
-console.log('Il risultato è :', result, typeof result)
-if (result){
-    console.log('E\' pari')
-}
-else {
-    console.log('E\' dispari')
-}
+    // Uso la funzione per creare un numero random tra 1 e 5
+    const numeroRandom = randomNumber(1, 5);
 
-if (result && scelta == 'pari'){
-    console.log('Hai vinto')
-}
-else {
-    console.log('Hai perso')
-}
+    // Uso la funzione per definire se è pari o dispari
+    const result = oddEven(numeroRandom, userNumber);
+    const resultNumber = userNumber + numeroRandom;
+
+    if (result && even.selected){
+        console.log('Hai vinto')
+        myP.innerHTML = `Hai selezionato pari ed'è uscito ${resultNumber} quindi hai vinto!`;
+    }
+    else if (result == false && odd.selected) {
+        console.log('Hai vinto')
+        myP.innerHTML = `Hai selezionato dispari ed'è uscito ${resultNumber} quindi hai vinto!`;
+
+    }
+    else if (result == false && even.selected){
+        console.log('Hai perso')
+        myP.innerHTML = `Hai selezionato pari ed'è uscito ${resultNumber} quindi hai perso!`;
+    }
+    else if (result && odd.selected){
+        myP.innerHTML = `Hai selezionato dispari ed'è uscito ${resultNumber} quindi hai perso!`;
+
+    }
+    else {
+        myP.innerHTML = `Seleziona pari o dispari`;
+
+    }
+    
+
+})
